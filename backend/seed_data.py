@@ -89,6 +89,14 @@ MEDICINES = [
     {"name": "Clotrimazole Cream", "manufacturer": "SkinCare", "batch_no": "CLO2024020", "quantity": 45, "price": 14.00, "expiry_date": (datetime.now() + timedelta(days=280)).strftime("%Y-%m-%d"), "category": "Cream", "reorder_level": 30},
 ]
 
+SUPPLIERS = [
+    {"name": "MedLine Distributors", "contact_person": "Ravi Shankar", "email": "ravi@medline.com", "phone": "+91-9800001111", "active": True, "rating": 4.8},
+    {"name": "PharmaHub Wholesale", "contact_person": "Neeta Joshi", "email": "neeta@pharmahub.com", "phone": "+91-9800002222", "active": True, "rating": 4.5},
+    {"name": "LifeCare Supplies", "contact_person": "Suresh Babu", "email": "suresh@lifecare.com", "phone": "+91-9800003333", "active": True, "rating": 4.2},
+    {"name": "GenericMeds Corp", "contact_person": "Anita Kulkarni", "email": "anita@genericmeds.com", "phone": "+91-9800004444", "active": True, "rating": 3.9},
+    {"name": "NovaPharma India", "contact_person": "Deepak Rao", "email": "deepak@novapharma.in", "phone": "+91-9800005555", "active": True, "rating": 4.6},
+]
+
 CUSTOMERS = [
     {"name": "Rajesh Kumar", "email": "rajesh.kumar@email.com", "phone": "+91-9876543210", "address": "123 MG Road, Bangalore, Karnataka 560001", "created_at": (datetime.now() - timedelta(days=120)).strftime("%Y-%m-%d %H:%M:%S"), "total_purchases": 0.0},
     {"name": "Priya Sharma", "email": "priya.sharma@email.com", "phone": "+91-9876543211", "address": "456 Park Street, Kolkata, West Bengal 700016", "created_at": (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d %H:%M:%S"), "total_purchases": 0.0},
@@ -128,6 +136,8 @@ async def seed_database():
         await db.sales.delete_many({})
         await db.bills.delete_many({})
         await db.predictions.delete_many({})
+        await db.suppliers.delete_many({})
+        await db.purchase_orders.delete_many({})
         print("✅ Collections cleared")
         
         # Seed Users
@@ -237,6 +247,93 @@ async def seed_database():
         
         result = await db.bills.insert_many(bills_data)
         print(f"✅ Inserted {len(result.inserted_ids)} bills")
+
+        # Seed Suppliers
+        print("\n🏭 Seeding suppliers...")
+        suppliers_to_insert = []
+        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        for s in SUPPLIERS:
+            sup = s.copy()
+            sup["total_orders"] = 0
+            sup["total_amount"] = 0.0
+            sup["created_at"] = (datetime.now() - timedelta(days=random.randint(30, 180))).strftime("%Y-%m-%d %H:%M:%S")
+            sup["updated_at"] = now_str
+            suppliers_to_insert.append(sup)
+
+        result = await db.suppliers.insert_many(suppliers_to_insert)
+        supplier_ids = result.inserted_ids
+        print(f"✅ Inserted {len(supplier_ids)} suppliers")
+
+        # Seed Purchase Orders
+        print("\n📦 Seeding purchase orders...")
+        suppliers_with_ids = await db.suppliers.find().to_list(length=100)
+        po_data = []
+        statuses = ["pending", "ordered", "delivered", "delivered", "ordered"]
+
+        for i in range(20):
+            days_ago = random.randint(0, 60)
+            order_date = (datetime.now() - timedelta(days=days_ago)).strftime("%Y-%m-%d")
+            supplier = random.choice(suppliers_with_ids)
+            status = statuses[i % len(statuses)]
+
+            num_items = random.randint(1, 4)
+            items = []
+            total_amount = 0.0
+            for _ in range(num_items):
+                medicine = random.choice(medicines_with_ids)
+                qty = random.randint(50, 200)
+                unit_price = round(medicine["price"] * random.uniform(0.6, 0.85), 2)
+                item_total = round(qty * unit_price, 2)
+                items.append({
+                    "medicine_id": str(medicine["_id"]),
+                    "medicine_name": medicine["name"],
+                    "quantity": qty,
+                    "unit_price": unit_price,
+                    "total_price": item_total,
+                })
+                total_amount += item_total
+
+            po_number = f"PO-{(datetime.now() - timedelta(days=days_ago)).strftime('%Y%m%d')}-{str(i+1).zfill(4)}"
+
+            po = {
+                "po_number": po_number,
+                "supplier_id": str(supplier["_id"]),
+                "supplier_name": supplier["name"],
+                "items": items,
+                "order_date": order_date,
+                "total_amount": round(total_amount, 2),
+                "status": status,
+                "created_at": (datetime.now() - timedelta(days=days_ago)).strftime("%Y-%m-%d %H:%M:%S"),
+                "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            }
+
+            if status in ("ordered", "delivered"):
+                po["ordered_by"] = "Admin"
+                po["ordered_at"] = (datetime.now() - timedelta(days=days_ago - 1)).strftime("%Y-%m-%d %H:%M:%S")
+                po["order_notes"] = ""
+
+            if status == "delivered":
+                po["received_by"] = "Admin"
+                po["delivered_at"] = (datetime.now() - timedelta(days=max(0, days_ago - 3))).strftime("%Y-%m-%d %H:%M:%S")
+                po["items_received"] = items
+                po["receive_notes"] = ""
+                po["payment_status"] = random.choice(["paid", "pending"])
+
+            po_data.append(po)
+
+        result = await db.purchase_orders.insert_many(po_data)
+        print(f"✅ Inserted {len(result.inserted_ids)} purchase orders")
+
+        # Update supplier stats based on seeded POs
+        for po in po_data:
+            inc = {"total_orders": 1}
+            if po["status"] == "delivered":
+                inc["total_amount"] = po["total_amount"]
+            await db.suppliers.update_one(
+                {"_id": next(s["_id"] for s in suppliers_with_ids if str(s["_id"]) == po["supplier_id"])},
+                {"$inc": inc}
+            )
+        print("✅ Supplier stats updated")
         
         # Seed Predictions
         print("\n🔮 Seeding predictions...")
@@ -268,6 +365,9 @@ async def seed_database():
         await db.users.create_index("email", unique=True)
         await db.sales.create_index("sale_date")
         await db.bills.create_index("bill_number")
+        await db.suppliers.create_index("name")
+        await db.purchase_orders.create_index("po_number")
+        await db.purchase_orders.create_index("supplier_id")
         print("✅ Indexes created")
         
         # Summary
@@ -281,6 +381,8 @@ async def seed_database():
         print(f"   📈 Sales: {len(sales_data)}")
         print(f"   🧾 Bills: {len(bills_data)}")
         print(f"   🔮 Predictions: {len(predictions_data)}")
+        print(f"   🏭 Suppliers: {len(SUPPLIERS)}")
+        print(f"   📦 Purchase Orders: {len(po_data)}")
         print("="*60)
         print("\n💡 You can now login with these credentials:")
         print("   Admin: admin@pharmacy.com / admin123")
