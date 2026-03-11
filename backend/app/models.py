@@ -101,7 +101,7 @@ class Bill(BaseModel):
     customer_phone: Optional[str] = None
     customer_gstin: Optional[str] = None  # GST Identification Number
     billing_address: Optional[str] = None  # Customer billing address
-    payment_mode: str  # Cash, Card, UPI
+    payment_mode: str = "Cash"  # Cash, Card, UPI
     items: list[BillItem]
     subtotal: float
     gst_percentage: float = 18.0

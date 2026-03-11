@@ -51,42 +51,42 @@ USERS = [
 
 MEDICINES = [
     # Antibiotics
-    {"name": "Amoxicillin 500mg", "manufacturer": "PharmaCorp", "batch_no": "AMX2024001", "quantity": 150, "price": 12.50, "expiry_date": (datetime.now() + timedelta(days=365)).strftime("%Y-%m-%d"), "category": "Antibiotics", "reorder_level": 50},
-    {"name": "Azithromycin 250mg", "manufacturer": "MediLife", "batch_no": "AZI2024002", "quantity": 8, "price": 18.75, "expiry_date": (datetime.now() + timedelta(days=180)).strftime("%Y-%m-%d"), "category": "Antibiotics", "reorder_level": 30},
-    {"name": "Ciprofloxacin 500mg", "manufacturer": "HealthPlus", "batch_no": "CIP2024003", "quantity": 95, "price": 15.00, "expiry_date": (datetime.now() + timedelta(days=540)).strftime("%Y-%m-%d"), "category": "Antibiotics", "reorder_level": 40},
+    {"name": "Amoxicillin 500mg", "manufacturer": "PharmaCorp", "batch_no": "AMX2024001", "quantity": 150, "price": 12.50, "expiry_date": (datetime.now() + timedelta(days=365)).strftime("%Y-%m-%d"), "category": "Capsule", "reorder_level": 50},
+    {"name": "Azithromycin 250mg", "manufacturer": "MediLife", "batch_no": "AZI2024002", "quantity": 8, "price": 18.75, "expiry_date": (datetime.now() + timedelta(days=180)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 30},
+    {"name": "Ciprofloxacin 500mg", "manufacturer": "HealthPlus", "batch_no": "CIP2024003", "quantity": 95, "price": 15.00, "expiry_date": (datetime.now() + timedelta(days=540)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 40},
     
     # Painkillers
-    {"name": "Paracetamol 500mg", "manufacturer": "GenericMed", "batch_no": "PAR2024004", "quantity": 250, "price": 5.00, "expiry_date": (datetime.now() + timedelta(days=730)).strftime("%Y-%m-%d"), "category": "Painkillers", "reorder_level": 100},
-    {"name": "Ibuprofen 400mg", "manufacturer": "PainRelief Inc", "batch_no": "IBU2024005", "quantity": 120, "price": 8.50, "expiry_date": (datetime.now() + timedelta(days=450)).strftime("%Y-%m-%d"), "category": "Painkillers", "reorder_level": 60},
-    {"name": "Aspirin 75mg", "manufacturer": "CardioHealth", "batch_no": "ASP2024006", "quantity": 180, "price": 6.25, "expiry_date": (datetime.now() + timedelta(days=600)).strftime("%Y-%m-%d"), "category": "Painkillers", "reorder_level": 80},
+    {"name": "Paracetamol 500mg", "manufacturer": "GenericMed", "batch_no": "PAR2024004", "quantity": 250, "price": 5.00, "expiry_date": (datetime.now() + timedelta(days=730)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 100},
+    {"name": "Ibuprofen 400mg", "manufacturer": "PainRelief Inc", "batch_no": "IBU2024005", "quantity": 120, "price": 8.50, "expiry_date": (datetime.now() + timedelta(days=450)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 60},
+    {"name": "Aspirin 75mg", "manufacturer": "CardioHealth", "batch_no": "ASP2024006", "quantity": 180, "price": 6.25, "expiry_date": (datetime.now() + timedelta(days=600)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 80},
     
     # Antihistamines
-    {"name": "Cetirizine 10mg", "manufacturer": "AllergyFree", "batch_no": "CET2024007", "quantity": 5, "price": 7.50, "expiry_date": (datetime.now() + timedelta(days=20)).strftime("%Y-%m-%d"), "category": "Antihistamines", "reorder_level": 50},
-    {"name": "Loratadine 10mg", "manufacturer": "NoSneezeRx", "batch_no": "LOR2024008", "quantity": 85, "price": 9.00, "expiry_date": (datetime.now() + timedelta(days=400)).strftime("%Y-%m-%d"), "category": "Antihistamines", "reorder_level": 45},
+    {"name": "Cetirizine 10mg", "manufacturer": "AllergyFree", "batch_no": "CET2024007", "quantity": 5, "price": 7.50, "expiry_date": (datetime.now() + timedelta(days=20)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 50},
+    {"name": "Loratadine 10mg", "manufacturer": "NoSneezeRx", "batch_no": "LOR2024008", "quantity": 85, "price": 9.00, "expiry_date": (datetime.now() + timedelta(days=400)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 45},
     
     # Vitamins
-    {"name": "Vitamin D3 1000IU", "manufacturer": "VitaLife", "batch_no": "VD32024009", "quantity": 200, "price": 14.99, "expiry_date": (datetime.now() + timedelta(days=800)).strftime("%Y-%m-%d"), "category": "Vitamins", "reorder_level": 70},
-    {"name": "Vitamin C 500mg", "manufacturer": "ImmuneBoost", "batch_no": "VTC2024010", "quantity": 150, "price": 11.50, "expiry_date": (datetime.now() + timedelta(days=700)).strftime("%Y-%m-%d"), "category": "Vitamins", "reorder_level": 60},
-    {"name": "Multivitamin Complex", "manufacturer": "DailyHealth", "batch_no": "MUL2024011", "quantity": 3, "price": 22.00, "expiry_date": (datetime.now() + timedelta(days=15)).strftime("%Y-%m-%d"), "category": "Vitamins", "reorder_level": 50},
+    {"name": "Vitamin D3 1000IU", "manufacturer": "VitaLife", "batch_no": "VD32024009", "quantity": 200, "price": 14.99, "expiry_date": (datetime.now() + timedelta(days=800)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 70},
+    {"name": "Vitamin C 500mg", "manufacturer": "ImmuneBoost", "batch_no": "VTC2024010", "quantity": 150, "price": 11.50, "expiry_date": (datetime.now() + timedelta(days=700)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 60},
+    {"name": "Multivitamin Complex", "manufacturer": "DailyHealth", "batch_no": "MUL2024011", "quantity": 3, "price": 22.00, "expiry_date": (datetime.now() + timedelta(days=15)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 50},
     
     # Antacids
-    {"name": "Omeprazole 20mg", "manufacturer": "GastroRelief", "batch_no": "OME2024012", "quantity": 110, "price": 13.25, "expiry_date": (datetime.now() + timedelta(days=500)).strftime("%Y-%m-%d"), "category": "Antacids", "reorder_level": 50},
-    {"name": "Ranitidine 150mg", "manufacturer": "DigestEase", "batch_no": "RAN2024013", "quantity": 75, "price": 10.50, "expiry_date": (datetime.now() + timedelta(days=350)).strftime("%Y-%m-%d"), "category": "Antacids", "reorder_level": 40},
+    {"name": "Omeprazole 20mg", "manufacturer": "GastroRelief", "batch_no": "OME2024012", "quantity": 110, "price": 13.25, "expiry_date": (datetime.now() + timedelta(days=500)).strftime("%Y-%m-%d"), "category": "Capsule", "reorder_level": 50},
+    {"name": "Ranitidine 150mg", "manufacturer": "DigestEase", "batch_no": "RAN2024013", "quantity": 75, "price": 10.50, "expiry_date": (datetime.now() + timedelta(days=350)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 40},
     
     # Cough & Cold
-    {"name": "Dextromethorphan Syrup", "manufacturer": "CoughAway", "batch_no": "DEX2024014", "quantity": 60, "price": 16.75, "expiry_date": (datetime.now() + timedelta(days=300)).strftime("%Y-%m-%d"), "category": "Cough & Cold", "reorder_level": 35},
-    {"name": "Guaifenesin 400mg", "manufacturer": "RespiClear", "batch_no": "GUA2024015", "quantity": 90, "price": 12.00, "expiry_date": (datetime.now() + timedelta(days=420)).strftime("%Y-%m-%d"), "category": "Cough & Cold", "reorder_level": 45},
+    {"name": "Dextromethorphan Syrup", "manufacturer": "CoughAway", "batch_no": "DEX2024014", "quantity": 60, "price": 16.75, "expiry_date": (datetime.now() + timedelta(days=300)).strftime("%Y-%m-%d"), "category": "Syrup", "reorder_level": 35},
+    {"name": "Guaifenesin 400mg", "manufacturer": "RespiClear", "batch_no": "GUA2024015", "quantity": 90, "price": 12.00, "expiry_date": (datetime.now() + timedelta(days=420)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 45},
     
     # Diabetes
-    {"name": "Metformin 500mg", "manufacturer": "DiabetesCare", "batch_no": "MET2024016", "quantity": 6, "price": 19.50, "expiry_date": (datetime.now() + timedelta(days=25)).strftime("%Y-%m-%d"), "category": "Diabetes", "reorder_level": 60},
-    {"name": "Glimepiride 2mg", "manufacturer": "SugarControl", "batch_no": "GLI2024017", "quantity": 85, "price": 24.00, "expiry_date": (datetime.now() + timedelta(days=480)).strftime("%Y-%m-%d"), "category": "Diabetes", "reorder_level": 40},
+    {"name": "Metformin 500mg", "manufacturer": "DiabetesCare", "batch_no": "MET2024016", "quantity": 6, "price": 19.50, "expiry_date": (datetime.now() + timedelta(days=25)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 60},
+    {"name": "Glimepiride 2mg", "manufacturer": "SugarControl", "batch_no": "GLI2024017", "quantity": 85, "price": 24.00, "expiry_date": (datetime.now() + timedelta(days=480)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 40},
     
     # Hypertension
-    {"name": "Amlodipine 5mg", "manufacturer": "HeartHealth", "batch_no": "AML2024018", "quantity": 130, "price": 17.25, "expiry_date": (datetime.now() + timedelta(days=550)).strftime("%Y-%m-%d"), "category": "Hypertension", "reorder_level": 55},
-    {"name": "Losartan 50mg", "manufacturer": "BP-Control", "batch_no": "LOS2024019", "quantity": 100, "price": 21.50, "expiry_date": (datetime.now() + timedelta(days=600)).strftime("%Y-%m-%d"), "category": "Hypertension", "reorder_level": 50},
+    {"name": "Amlodipine 5mg", "manufacturer": "HeartHealth", "batch_no": "AML2024018", "quantity": 130, "price": 17.25, "expiry_date": (datetime.now() + timedelta(days=550)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 55},
+    {"name": "Losartan 50mg", "manufacturer": "BP-Control", "batch_no": "LOS2024019", "quantity": 100, "price": 21.50, "expiry_date": (datetime.now() + timedelta(days=600)).strftime("%Y-%m-%d"), "category": "Tablet", "reorder_level": 50},
     
     # Dermatology
-    {"name": "Clotrimazole Cream", "manufacturer": "SkinCare", "batch_no": "CLO2024020", "quantity": 45, "price": 14.00, "expiry_date": (datetime.now() + timedelta(days=280)).strftime("%Y-%m-%d"), "category": "Dermatology", "reorder_level": 30},
+    {"name": "Clotrimazole Cream", "manufacturer": "SkinCare", "batch_no": "CLO2024020", "quantity": 45, "price": 14.00, "expiry_date": (datetime.now() + timedelta(days=280)).strftime("%Y-%m-%d"), "category": "Cream", "reorder_level": 30},
 ]
 
 CUSTOMERS = [
