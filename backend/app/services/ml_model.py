@@ -1,9 +1,10 @@
 import pandas as pd
 from sklearn.linear_model import LinearRegression
-from datetime import datetime, timedelta
 import numpy as np
 
-def predict_demand(sales_data):
+def predict_demand(sales_data, stock_by_medicine=None):
+    if stock_by_medicine is None:
+        stock_by_medicine = {}
     df = pd.DataFrame(sales_data)
     df['sale_date'] = pd.to_datetime(df['sale_date'])
     
@@ -29,12 +30,14 @@ def predict_demand(sales_data):
         
         avg_prediction = max(0, pred.mean())
         confidence = min(0.95, model.score(X, y))
-        
+        current_stock = int(stock_by_medicine.get(medicine.strip().lower(), 0))
+
         predictions.append({
             "medicine_name": medicine,
+            "current_stock": current_stock,
             "predicted_demand": round(avg_prediction, 2),
             "confidence": round(confidence, 2),
-            "recommendation": "reorder" if avg_prediction > 10 else "sufficient"
+            "recommendation": "reorder" if avg_prediction > current_stock else "sufficient"
         })
     
     return sorted(predictions, key=lambda x: x['predicted_demand'], reverse=True)
