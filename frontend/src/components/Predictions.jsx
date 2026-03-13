@@ -258,7 +258,6 @@ export default function Predictions() {
                   <th className="px-6 py-4 text-left text-sm font-semibold">Predicted Demand</th>
                   <th className="px-6 py-4 text-left text-sm font-semibold">Difference</th>
                   <th className="px-6 py-4 text-left text-sm font-semibold">Status</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -313,13 +312,7 @@ export default function Predictions() {
                           </span>
                         )}
                       </td>
-                      <td className="px-6 py-4">
-                        {needsReorder && (
-                          <button className="px-4 py-2 bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white rounded-lg text-sm transition-all">
-                            Order {difference} units
-                          </button>
-                        )}
-                      </td>
+
                     </tr>
                   );
                 })}
